@@ -42,7 +42,8 @@ export async function POST(request: NextRequest) {
         const decoder = new TextDecoder();
 
         if (reader) {
-          while (true) {
+          let streamComplete = false;
+          while (!streamComplete) {
             const { done, value } = await reader.read();
             if (done) break;
 
@@ -54,6 +55,7 @@ export async function POST(request: NextRequest) {
                 const data = line.slice(6);
                 if (data === "[DONE]") {
                   controller.enqueue(encoder.encode("data: [DONE]\n\n"));
+                  streamComplete = true;
                   break;
                 }
                 try {
