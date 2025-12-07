@@ -19,7 +19,7 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider defaultTheme="system" enableSystem>
+      <ThemeProvider defaultTheme="system">
         <TooltipProvider>
           <Toaster />
           <Router />
