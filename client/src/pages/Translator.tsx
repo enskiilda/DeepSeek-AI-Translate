@@ -1,8 +1,15 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeftRight, Copy, Check, RotateCcw, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowLeftRight, Copy, Check, RotateCcw, Sparkles, ChevronDown } from "lucide-react";
 import { translateText } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import { Button } from "@/components/ui/button";
 
 const LANGUAGES = [
   { code: "PL", name: "Polski" },
@@ -63,6 +70,8 @@ export default function Translator() {
     setOutputText(inputText);
   };
 
+  const getLangName = (code: string) => LANGUAGES.find(l => l.code === code)?.name || code;
+
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col items-center p-4 md:p-8 font-sans">
       
@@ -80,33 +89,53 @@ export default function Translator() {
       <main className="w-full max-w-3xl flex-1 flex flex-col gap-6">
         
         {/* Language Selector */}
-        <div className="bg-secondary/50 rounded-2xl p-1.5 flex items-center justify-between w-full max-w-md mx-auto mb-4">
-            <select 
-              value={sourceLang}
-              onChange={(e) => setSourceLang(e.target.value)}
-              className="bg-transparent border-none text-sm font-medium py-2 px-4 focus:ring-0 cursor-pointer outline-none appearance-none text-center flex-1 hover:text-primary transition-colors"
-            >
-              {LANGUAGES.map(lang => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
+        <div className="bg-secondary/50 rounded-2xl p-2 flex items-center justify-between w-full max-w-md mx-auto mb-4">
+            
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex-1 justify-between font-normal text-base px-4 h-10 hover:bg-background/50">
+                  {getLangName(sourceLang)} <ChevronDown className="w-4 h-4 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="min-w-[180px]" align="start">
+                {LANGUAGES.map(lang => (
+                  <DropdownMenuItem 
+                    key={lang.code} 
+                    onClick={() => setSourceLang(lang.code)}
+                    className="cursor-pointer"
+                  >
+                    {lang.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
 
             <button 
               onClick={swapLanguages}
-              className="p-2 rounded-full hover:bg-background/80 transition-colors text-muted-foreground hover:text-primary"
+              className="p-2 rounded-full hover:bg-background/80 transition-colors text-muted-foreground hover:text-primary mx-2"
             >
               <ArrowLeftRight className="w-4 h-4" />
             </button>
 
-            <select 
-              value={targetLang}
-              onChange={(e) => setTargetLang(e.target.value)}
-              className="bg-transparent border-none text-sm font-medium py-2 px-4 focus:ring-0 cursor-pointer outline-none appearance-none text-center flex-1 hover:text-primary transition-colors"
-            >
-              {LANGUAGES.map(lang => (
-                <option key={lang.code} value={lang.code}>{lang.name}</option>
-              ))}
-            </select>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="flex-1 justify-between font-normal text-base px-4 h-10 hover:bg-background/50">
+                  {getLangName(targetLang)} <ChevronDown className="w-4 h-4 opacity-50" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="min-w-[180px]" align="end">
+                {LANGUAGES.map(lang => (
+                  <DropdownMenuItem 
+                    key={lang.code} 
+                    onClick={() => setTargetLang(lang.code)}
+                    className="cursor-pointer"
+                  >
+                    {lang.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
         </div>
 
         {/* Input Area */}
