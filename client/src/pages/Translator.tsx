@@ -89,20 +89,20 @@ export default function Translator() {
       <main className="w-full max-w-3xl flex-1 flex flex-col gap-6">
         
         {/* Language Selector */}
-        <div className="bg-secondary/50 rounded-2xl p-2 flex items-center justify-between w-full max-w-md mx-auto mb-4">
+        <div className="flex items-center justify-center gap-4 w-full max-w-md mx-auto mb-4">
             
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex-1 justify-between font-normal text-base px-4 h-10 hover:bg-background/50">
+                <Button variant="ghost" size="lg" className="text-primary gap-2 text-lg font-medium px-4">
                   {getLangName(sourceLang)} <ChevronDown className="w-4 h-4 opacity-50" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-[180px]" align="start">
+              <DropdownMenuContent className="w-[210px]" align="start">
                 {LANGUAGES.map(lang => (
                   <DropdownMenuItem 
                     key={lang.code} 
                     onClick={() => setSourceLang(lang.code)}
-                    className="cursor-pointer"
+                    className="cursor-pointer py-2"
                   >
                     {lang.name}
                   </DropdownMenuItem>
@@ -112,23 +112,23 @@ export default function Translator() {
 
             <button 
               onClick={swapLanguages}
-              className="p-2 rounded-full hover:bg-background/80 transition-colors text-muted-foreground hover:text-primary mx-2"
+              className="p-3 rounded-full hover:bg-secondary transition-colors text-muted-foreground hover:text-primary"
             >
-              <ArrowLeftRight className="w-4 h-4" />
+              <ArrowLeftRight className="w-5 h-5" />
             </button>
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex-1 justify-between font-normal text-base px-4 h-10 hover:bg-background/50">
+                <Button variant="ghost" size="lg" className="text-primary gap-2 text-lg font-medium px-4">
                   {getLangName(targetLang)} <ChevronDown className="w-4 h-4 opacity-50" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-[180px]" align="end">
+              <DropdownMenuContent className="w-[210px]" align="end">
                 {LANGUAGES.map(lang => (
                   <DropdownMenuItem 
                     key={lang.code} 
                     onClick={() => setTargetLang(lang.code)}
-                    className="cursor-pointer"
+                    className="cursor-pointer py-2"
                   >
                     {lang.name}
                   </DropdownMenuItem>
