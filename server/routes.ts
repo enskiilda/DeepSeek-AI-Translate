@@ -34,7 +34,6 @@ export async function registerRoutes(
             { role: "user", content: prompt }
           ],
           temperature: 0.3,
-          max_tokens: 16384,
           stream: true
         }),
       });
