@@ -1,0 +1,168 @@
+design guidelines:
+
+🌿 **UNIWERSALNE GUIDELINES UI — „OpenAI / ChatGPT Style”
+Instrukcja dla dowolnego AI generującego design**
+🎨 Cel stylu
+Projektuj interfejsy tak, aby były:
+* maksymalnie minimalistyczne,
+* neutralne wizualnie,
+* ciche i spokojne,
+* wysoce czytelne i uporządkowane,
+* skupione na treści, nie na ozdobach.
+Interfejs ma przypominać styl ChatGPT / OpenAI: elegancki, funkcjonalny, profesjonalny, bez rozpraszaczy.
+
+🟩 1. Minimalizm jako zasada nadrzędna
+* Usuwaj wszystkie elementy, które nie są konieczne.
+* Unikaj ozdobników, zbędnych ikon, ramek, gradientów.
+* Layout ma być prosty, czysty i klarowny.
+* Marginesy powinny być duże; przestrzeń powietrzna jest kluczowa.
+
+🟦 2. Neutralna kolorystyka
+Używaj palety:
+* biel / czerń / szarości
+* drobne, delikatne akcenty (np. subtelny błękit, grafit)
+Unikaj:
+* intensywnych kolorów,
+* neonów,
+* gradientów,
+* jaskrawych tła.
+Kolor ma wspierać funkcję, nie ozdobę.
+
+🌿 3. Priorytet: czytelność i komfort wizualny
+* Stosuj nowoczesne, neutralne sans-serif fonty.
+* Utrzymuj duży leading (wysokość linii) dla czytelności.
+* Używaj dużych odstępów między sekcjami.
+* Zachowuj bardzo wysoki kontrast między tekstem a tłem.
+Tekst jest centralnym elementem UI.
+
+🟣 4. Hierarchia informacji
+Priorytet w kolejności:
+1. treść (tekst użytkownika i systemu),
+2. główne pole interakcji (np. input),
+3. przyciski funkcjonalne,
+4. elementy dodatkowe.
+Nie dodawaj elementów, które zakłócałyby linearność i przejrzystość.
+
+🌫️ 5. Spokojne, nienarzucające się animacje
+* Animacje mają być miękkie i subtelne.
+* Mają pełnić wyłącznie funkcję informacyjną (np. ładowanie).
+* Unikaj dynamicznych przejść, „fajerwerków”, mikrointerakcji dla efektu.
+
+🟩 6. Brak mascotek i nadawania AI wizualnej „osoby”
+* Nie twórz postaci, avatarek ani ikon antropomorficznych.
+* Nie buduj wizualnej „osobowości” narzędzia.
+* Interfejs ma być neutralny i profesjonalny.
+
+🟫 7. Anty-gamifikacja
+Unikaj:
+* rankingów,
+* punktów,
+* badge’y,
+* kolorowych powiadomień,
+* krzykliwych CTA.
+UI ma działać w filozofii „calm tech”.
+
+🟡 8. Skromna ikonografia
+* Ikony tylko tam, gdzie realnie pomagają funkcji.
+* Proste, cienkie linie, neutralne kolory.
+* Brak ilustrowanych ikon czy emoji jako elementu designu (emoji mogą być w treści, ale nie w konstrukcji UI).
+
+🟦 9. Maksymalna funkcjonalność z minimalną formą
+* Wszystkie elementy muszą mieć jasny, oczywisty cel.
+* Każdy moduł powinien dać się wytłumaczyć jednym zdaniem.
+* Jeżeli element nie wnosi wartości funkcjonalnej — usuń go.
+
+🌿 10. Design skalowalny i modularny
+* Interfejs powinien adaptować się płynnie do różnych urządzeń.
+* Moduły powinny być proste, powtarzalne i łatwe do reorganizacji.
+* Unikaj złożonych siatek layoutu.
+
+🟧 11. Tłumaczenie stanu zawsze jasne i nienachalne
+* Stany błędów: proste, spokojne komunikaty.
+* Brak czerwieni w alarmach — raczej szarość + czarny tekst.
+* Komunikaty krótkie, bez emocjonalnych ozdobników.
+
+🟪 12. Treść ma dominować nad UI
+* Projektuj tak, aby interfejs „znikał”.
+* Użytkownik ma czuć, że jest w przestrzeni rozmowy, nie „w aplikacji”.
+
+🟦 13. Żadne elementy nie powinny sugerować emocji od AI
+* Unikaj „uśmiechniętych” ikon, emotikonów, gestów graficznych.
+* Styl musi pozostać spokojny i bezstronny.
+
+🌿 14. Zachowanie tonu „calm, quiet, transparent”
+UI ma aktywnie redukować:
+* stres,
+* presję,
+* agresję wizualną.
+Wszystko ma tworzyć poczucie spokoju i harmonii.
+
+🌙 15. Dark mode = równie minimalistyczny i czysty
+* Tylko odcienie grafitów i czerni.
+* Subtelne akcenty w jasnych, chłodnych odcieniach.
+
+🟫 16. Funkcje multimedialne – zawsze skromne
+Zdjęcia, dokumenty, audio:
+* wyświetlane w prostych, cienkich ramach lub bez ramek,
+* bez cieni, obramowań, efektów.
+
+🟩 17. Zero chaosu
+Unikaj:
+* rozproszonych menu,
+* rozwijanych paneli w wielu miejscach,
+* wielopoziomowej nawigacji,
+* „pływających” widgetów.
+
+🟦 18. Jasna struktura: input → treść → funkcje
+To filozofia ChatGPT:
+* piszesz,
+* dostajesz odpowiedź,
+* masz podstawowe akcje.
+UI nigdy nie ma przeszkadzać w rozmowie.
+
+🌿 19. Zasada redukcji
+Przy każdym ekranie stosuj pytanie projektowe:
+„Co tutaj można usunąć i nadal zachować perfekcyjną funkcjonalność?”
+
+🌟 20. Stabilna tożsamość wizualna
+* Styl ma być natychmiast rozpoznawalny jako „AI premium”.
+* Spójność między ekranami jest ważniejsza niż indywidualność ekranów.
+
+
+  MUSI BYC TO W DESIGNIE ZGODNYM Z @openai/apps-sdk-ui var(--radius-2xl) var(--font-sans) Text colors
+
+
+		gray-1000
+		gray-500
+		gray-400
+		gray-0
+Semantic colors
+		gray-1000
+		gray-100
+		gray-150
+		gray-200
+		alpha-08
+		alpha-12
+		alpha-16
+		color-text
+		alpha-02
+		alpha-06
+		color-text
+		alpha-05
+		alpha-05
+		color-text
+		gray-900
+		gray-700
+		gray-600
+		white
+		alpha-02
+		alpha-04
+		alpha-16
+		alpha-20
+		color-text
+		color-text
+		alpha-08
+		alpha-12
+		color-text
+		color-text
+		
