@@ -63,3 +63,13 @@
 .textarea-ghost {
   @apply border-0 focus-visible:ring-0 px-0 resize-none text-lg md:text-xl leading-relaxed placeholder:text-muted-foreground/50;
 }
+
+/* Global focus removal as requested */
+*:focus, *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important;
+}
+
+/* Except for borders that are part of the design structure, but user said "po nacisnieciu" (on press) */
+/* so we target focus states specifically. The above covers it. */
