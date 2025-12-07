@@ -161,7 +161,7 @@ export default function Translator() {
                 }
               }}
               placeholder="Wpisz tekst..."
-              className="w-full bg-transparent border-0 text-xl font-normal leading-relaxed placeholder:text-muted-foreground/30 focus:ring-0 focus:outline-none focus-visible:ring-0 shadow-none resize-none p-0 h-[200px] md:h-[350px] overflow-y-auto overflow-x-hidden break-words custom-scrollbar"
+              className="w-full bg-transparent border-0 text-2xl font-normal leading-relaxed placeholder:text-muted-foreground/30 focus:ring-0 focus:outline-none focus-visible:ring-0 shadow-none resize-none p-0 h-[200px] md:h-[350px] overflow-y-auto overflow-x-hidden break-words custom-scrollbar"
               spellCheck={false}
             />
             {inputText && (
@@ -199,12 +199,12 @@ export default function Translator() {
                   exit={{ opacity: 0 }}
                   className="w-full h-[200px] md:h-[350px] overflow-y-auto custom-scrollbar pr-8"
                 >
-                  <div className="text-xl text-foreground/90 font-normal leading-relaxed break-words overflow-wrap-anywhere">
+                  <div className="text-2xl text-foreground/90 font-normal leading-relaxed break-words overflow-wrap-anywhere">
                     {outputText}
                   </div>
                 </motion.div>
               ) : (
-                <div className="text-xl text-muted-foreground/20 select-none h-[200px] md:h-[350px] break-words">
+                <div className="text-2xl text-muted-foreground/20 select-none h-[200px] md:h-[350px] break-words">
                   Tłumaczenie...
                 </div>
               )}
