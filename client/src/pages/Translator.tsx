@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeftRight, Copy, Check, RotateCcw, Sparkles, ChevronDown } from "lucide-react";
+import { ArrowLeftRight, Copy, Check, RotateCcw, Sparkles, ChevronDown } from "lucide-react";
 import { translateText } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 import {
