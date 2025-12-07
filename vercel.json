@@ -1,47 +1,9 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist/public",
   "headers": [
     {
-      "source": "/(.*).png",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/favicon.png",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        }
-      ]
-    },
-    {
-      "source": "/icon-192.png",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        }
-      ]
-    },
-    {
-      "source": "/icon-512.png",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        }
-      ]
-    },
-    {
-      "source": "/apple-touch-icon.png",
+      "source": "/(.*)\\.png",
       "headers": [
         {
           "key": "Content-Type",
@@ -57,6 +19,21 @@
           "value": "application/json"
         }
       ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/((?!api|assets|favicon|icon-|apple-touch|manifest|sw).*)",
+      "destination": "/index.html"
     }
   ]
 }
