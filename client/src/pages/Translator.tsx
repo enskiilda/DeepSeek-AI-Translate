@@ -23,16 +23,7 @@ export default function Translator() {
   const [sourceLang, setSourceLang] = useState("PL");
   const [targetLang, setTargetLang] = useState("EN");
   const [copied, setCopied] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const { toast } = useToast();
-
-  // Auto-resize textarea
-  useEffect(() => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
-    }
-  }, [inputText]);
 
   const handleTranslate = async () => {
     if (!inputText.trim()) return;
@@ -119,13 +110,12 @@ export default function Translator() {
         </div>
 
         {/* Input Area */}
-        <div className="relative group min-h-[160px] flex flex-col">
+        <div className="relative group flex flex-col">
           <textarea
-            ref={textareaRef}
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="Wpisz tekst..."
-            className="w-full bg-transparent border-0 text-3xl md:text-4xl font-normal leading-tight placeholder:text-muted-foreground/30 focus:ring-0 resize-none p-0 min-h-[120px]"
+            className="w-full bg-transparent border-0 text-3xl md:text-4xl font-normal leading-tight placeholder:text-muted-foreground/30 focus:ring-0 resize-none p-0 h-[200px] overflow-y-auto custom-scrollbar"
             spellCheck={false}
           />
           {inputText && (
@@ -164,20 +154,20 @@ export default function Translator() {
         </div>
 
         {/* Output Area */}
-        <div className="relative min-h-[160px] pb-20">
+        <div className="relative h-[200px] pb-4">
           <AnimatePresence mode="wait">
             {outputText ? (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="w-full"
+                className="w-full h-full overflow-y-auto custom-scrollbar pr-2"
               >
                 <div className="text-3xl md:text-4xl text-foreground/90 font-normal leading-tight">
                   {outputText}
                 </div>
                 
-                <div className="absolute top-full left-0 mt-4 flex items-center gap-2">
+                <div className="sticky bottom-0 left-0 pt-4 bg-gradient-to-t from-background via-background to-transparent flex items-center gap-2">
                   <button
                     onClick={handleCopy}
                     className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-secondary/50"
