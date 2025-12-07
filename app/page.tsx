@@ -163,7 +163,7 @@ export default function Translator() {
                 }
               }}
               placeholder="Wpisz tekst..."
-              className="w-full bg-transparent border-0 text-2xl font-normal leading-relaxed placeholder:text-muted-foreground/30 focus:ring-0 focus:outline-none focus-visible:ring-0 shadow-none resize-none p-0 h-[200px] md:h-[350px] overflow-y-auto overflow-x-hidden break-words custom-scrollbar"
+              className="w-full bg-transparent border-0 text-2xl font-normal leading-relaxed placeholder:text-muted-foreground/30 focus:ring-0 focus:outline-none focus-visible:ring-0 shadow-none resize-none p-0 pr-10 h-[200px] md:h-[350px] overflow-y-auto overflow-x-hidden break-words custom-scrollbar"
               spellCheck={false}
             />
             {inputText && (
