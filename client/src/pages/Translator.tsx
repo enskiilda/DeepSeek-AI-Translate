@@ -154,6 +154,12 @@ export default function Translator() {
           <textarea
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
+            onKeyDown={(e) => {
+              if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
+                e.preventDefault();
+                handleTranslate();
+              }
+            }}
             placeholder="Wpisz tekst..."
             className="w-full bg-transparent border-0 text-3xl md:text-4xl font-normal leading-tight placeholder:text-muted-foreground/30 focus:ring-0 focus:outline-none focus-visible:ring-0 shadow-none resize-none p-0 h-[200px] overflow-y-auto custom-scrollbar"
             spellCheck={false}
