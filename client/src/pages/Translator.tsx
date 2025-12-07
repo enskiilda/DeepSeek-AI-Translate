@@ -46,10 +46,11 @@ export default function Translator() {
         sourceLang: LANGUAGES.find(l => l.code === sourceLang)?.name
       });
       setOutputText(result);
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Full error object:", error);
       toast({
         title: "Błąd tłumaczenia",
-        description: "Nie udało się połączyć z usługą AI.",
+        description: error.message || "Nie udało się połączyć z usługą AI. Sprawdź konsolę.",
         variant: "destructive",
       });
     } finally {

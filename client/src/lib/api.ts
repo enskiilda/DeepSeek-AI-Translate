@@ -51,33 +51,41 @@ export async function translateText({ text, targetLang, sourceLang = "auto" }: T
     const data = await response.json();
     return data.choices[0]?.message?.content || "";
   } catch (error) {
-    console.error("Translation error:", error);
-    // Fallback if the specific v3.1 model name is wrong, retry with v3
-    if (String(error).includes("model") || String(error).includes("404")) {
-         return translateTextWithFallback({ text, targetLang, sourceLang });
-    }
-    throw error;
+    console.error("Translation error details:", error);
+    // Fallback logic
+    return translateTextWithFallback({ text, targetLang, sourceLang });
   }
 }
 
 async function translateTextWithFallback({ text, targetLang }: TranslationRequest) {
-    // Fallback implementation using a more generic model name if the specific one fails
-    // or standard deepseek-v3
+    console.log("Attempting fallback model...");
+    try {
       const response = await fetch(`${BASE_URL}/chat/completions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "deepseek-ai/deepseek-r1", // Another common deepseek model on NIM
-        messages: [
-          { role: "system", content: `Translate to ${targetLang}. Only output the translation.` },
-          { role: "user", content: text }
-        ],
-        temperature: 0.3,
-      }),
-    });
-    const data = await response.json();
-    return data.choices[0]?.message?.content || "";
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${API_KEY}`,
+        },
+        body: JSON.stringify({
+          model: "deepseek-ai/deepseek-r1", 
+          messages: [
+            { role: "system", content: `Translate to ${targetLang}. Only output the translation.` },
+            { role: "user", content: text }
+          ],
+          temperature: 0.3,
+        }),
+      });
+
+      if (!response.ok) {
+        const err = await response.json();
+        console.error("Fallback API Error:", err);
+        throw new Error(err.error?.message || "Fallback failed");
+      }
+
+      const data = await response.json();
+      return data.choices[0]?.message?.content || "";
+    } catch (fallbackError) {
+       console.error("Fallback failed:", fallbackError);
+       throw fallbackError;
+    }
 }
