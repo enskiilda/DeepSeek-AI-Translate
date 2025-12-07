@@ -42,12 +42,14 @@ export default function Translator() {
     if (!inputText.trim()) return;
     
     setIsLoading(true);
+    setOutputText("");
     try {
       const targetLangName = LANGUAGES.find(l => l.code === targetLang)?.name || "English";
       const result = await translateText({ 
         text: inputText, 
         targetLang: targetLangName,
-        sourceLang: LANGUAGES.find(l => l.code === sourceLang)?.name
+        sourceLang: LANGUAGES.find(l => l.code === sourceLang)?.name,
+        onChunk: (chunk) => setOutputText(chunk)
       });
       setOutputText(result);
     } catch (error: any) {

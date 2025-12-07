@@ -11,7 +11,7 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
-  // Translation endpoint (proxy to NVIDIA API)
+  // Translation endpoint (proxy to NVIDIA API with streaming)
   app.post("/api/translate", async (req, res) => {
     try {
       const { text, targetLang, sourceLang } = req.body;
@@ -20,11 +20,7 @@ export async function registerRoutes(
         return res.status(400).json({ error: "Missing required fields" });
       }
 
-      const systemPrompt = `You are a professional translator. Translate the user's text into ${targetLang}. 
-      Maintain the original tone and style. 
-      Do not explain the translation. 
-      Do not add notes. 
-      Just provide the translated text.`;
+      const prompt = `Translate the following text from ${sourceLang || "auto-detect"} to ${targetLang}. Only respond with the translation, no explanations:\n\n${text}`;
 
       const response = await fetch(`${NVIDIA_BASE_URL}/chat/completions`, {
         method: "POST",
@@ -35,12 +31,10 @@ export async function registerRoutes(
         body: JSON.stringify({
           model: "deepseek-ai/deepseek-v3.1",
           messages: [
-            { role: "system", content: systemPrompt },
-            { role: "user", content: text }
+            { role: "user", content: prompt }
           ],
           temperature: 0.3,
-          max_tokens: 1024,
-          stream: false
+          stream: true
         }),
       });
 
@@ -50,21 +44,59 @@ export async function registerRoutes(
         return res.status(response.status).json({ error: error.error?.message || "Translation failed" });
       }
 
-      const data = await response.json();
-      const translatedText = data.choices[0]?.message?.content || "";
+      res.setHeader("Content-Type", "text/event-stream");
+      res.setHeader("Cache-Control", "no-cache");
+      res.setHeader("Connection", "keep-alive");
 
-      // Save to database
-      await storage.saveTranslation({
-        sourceText: text,
-        translatedText,
-        sourceLang: sourceLang || "auto",
-        targetLang,
-      });
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let fullTranslation = "";
 
-      res.json({ translatedText });
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = chunk.split("\n").filter(line => line.trim() !== "");
+
+          for (const line of lines) {
+            if (line.startsWith("data: ")) {
+              const data = line.slice(6);
+              if (data === "[DONE]") {
+                res.write("data: [DONE]\n\n");
+                break;
+              }
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices?.[0]?.delta?.content || "";
+                if (content) {
+                  fullTranslation += content;
+                  res.write(`data: ${JSON.stringify({ content })}\n\n`);
+                }
+              } catch (e) {
+              }
+            }
+          }
+        }
+      }
+
+      res.end();
+
+      // Save to database after streaming completes
+      if (fullTranslation) {
+        await storage.saveTranslation({
+          sourceText: text,
+          translatedText: fullTranslation,
+          sourceLang: sourceLang || "auto",
+          targetLang,
+        });
+      }
     } catch (error: any) {
       console.error("Translation error:", error);
-      res.status(500).json({ error: error.message || "Internal server error" });
+      if (!res.headersSent) {
+        res.status(500).json({ error: error.message || "Internal server error" });
+      }
     }
   });
 
