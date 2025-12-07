@@ -1,0 +1,204 @@
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight, ArrowLeftRight, Copy, Check, RotateCcw, Sparkles } from "lucide-react";
+import { translateText } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
+
+const LANGUAGES = [
+  { code: "PL", name: "Polski" },
+  { code: "EN", name: "English" },
+  { code: "DE", name: "Deutsch" },
+  { code: "ES", name: "Español" },
+  { code: "FR", name: "Français" },
+  { code: "IT", name: "Italiano" },
+  { code: "ZH", name: "Chinese" },
+  { code: "JA", name: "Japanese" },
+  { code: "UA", name: "Українська" },
+];
+
+export default function Translator() {
+  const [inputText, setInputText] = useState("");
+  const [outputText, setOutputText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [sourceLang, setSourceLang] = useState("PL");
+  const [targetLang, setTargetLang] = useState("EN");
+  const [copied, setCopied] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { toast } = useToast();
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
+    }
+  }, [inputText]);
+
+  const handleTranslate = async () => {
+    if (!inputText.trim()) return;
+    
+    setIsLoading(true);
+    try {
+      const targetLangName = LANGUAGES.find(l => l.code === targetLang)?.name || "English";
+      const result = await translateText({ 
+        text: inputText, 
+        targetLang: targetLangName,
+        sourceLang: LANGUAGES.find(l => l.code === sourceLang)?.name
+      });
+      setOutputText(result);
+    } catch (error) {
+      toast({
+        title: "Błąd tłumaczenia",
+        description: "Nie udało się połączyć z usługą AI.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCopy = () => {
+    if (!outputText) return;
+    navigator.clipboard.writeText(outputText);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const swapLanguages = () => {
+    setSourceLang(targetLang);
+    setTargetLang(sourceLang);
+    setInputText(outputText);
+    setOutputText(inputText);
+  };
+
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col items-center p-4 md:p-8 font-sans">
+      
+      {/* Header - minimal */}
+      <header className="w-full max-w-3xl flex justify-between items-center mb-8 md:mb-12 pt-2">
+        <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+          <Sparkles className="w-4 h-4 text-primary" />
+          <span>AI Translator</span>
+        </div>
+        <div className="text-xs text-muted-foreground/50 uppercase tracking-widest">
+          DeepSeek V3.1
+        </div>
+      </header>
+
+      <main className="w-full max-w-3xl flex-1 flex flex-col gap-6">
+        
+        {/* Language Selector */}
+        <div className="bg-secondary/50 rounded-2xl p-1.5 flex items-center justify-between w-full max-w-md mx-auto mb-4">
+            <select 
+              value={sourceLang}
+              onChange={(e) => setSourceLang(e.target.value)}
+              className="bg-transparent border-none text-sm font-medium py-2 px-4 focus:ring-0 cursor-pointer outline-none appearance-none text-center flex-1 hover:text-primary transition-colors"
+            >
+              {LANGUAGES.map(lang => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+
+            <button 
+              onClick={swapLanguages}
+              className="p-2 rounded-full hover:bg-background/80 transition-colors text-muted-foreground hover:text-primary"
+            >
+              <ArrowLeftRight className="w-4 h-4" />
+            </button>
+
+            <select 
+              value={targetLang}
+              onChange={(e) => setTargetLang(e.target.value)}
+              className="bg-transparent border-none text-sm font-medium py-2 px-4 focus:ring-0 cursor-pointer outline-none appearance-none text-center flex-1 hover:text-primary transition-colors"
+            >
+              {LANGUAGES.map(lang => (
+                <option key={lang.code} value={lang.code}>{lang.name}</option>
+              ))}
+            </select>
+        </div>
+
+        {/* Input Area */}
+        <div className="relative group min-h-[160px] flex flex-col">
+          <textarea
+            ref={textareaRef}
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            placeholder="Wpisz tekst..."
+            className="w-full bg-transparent border-0 text-3xl md:text-4xl font-normal leading-tight placeholder:text-muted-foreground/30 focus:ring-0 resize-none p-0 min-h-[120px]"
+            spellCheck={false}
+          />
+          {inputText && (
+            <motion.button
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              onClick={() => { setInputText(""); setOutputText(""); }}
+              className="absolute -right-2 top-0 p-2 text-muted-foreground/30 hover:text-primary transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" />
+            </motion.button>
+          )}
+        </div>
+
+        {/* Divider / Action */}
+        <div className="flex justify-center py-4">
+           <button
+            onClick={handleTranslate}
+            disabled={isLoading || !inputText}
+            className={`
+              h-12 px-8 rounded-full flex items-center gap-2 font-medium transition-all duration-300
+              ${inputText 
+                ? 'bg-primary text-primary-foreground shadow-lg hover:shadow-xl hover:scale-105 active:scale-95' 
+                : 'bg-secondary text-muted-foreground cursor-not-allowed'}
+            `}
+           >
+             {isLoading ? (
+               <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+             ) : (
+               <>
+                 <span>Tłumacz</span>
+                 <ArrowRight className="w-4 h-4" />
+               </>
+             )}
+           </button>
+        </div>
+
+        {/* Output Area */}
+        <div className="relative min-h-[160px] pb-20">
+          <AnimatePresence mode="wait">
+            {outputText ? (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="w-full"
+              >
+                <div className="text-3xl md:text-4xl text-foreground/90 font-normal leading-tight">
+                  {outputText}
+                </div>
+                
+                <div className="absolute top-full left-0 mt-4 flex items-center gap-2">
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors px-3 py-1.5 rounded-lg hover:bg-secondary/50"
+                  >
+                    {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                    <span>{copied ? "Skopiowano" : "Kopiuj"}</span>
+                  </button>
+                </div>
+              </motion.div>
+            ) : (
+              <div className="text-3xl md:text-4xl text-muted-foreground/10 select-none">
+                Tłumaczenie pojawi się tutaj...
+              </div>
+            )}
+          </AnimatePresence>
+        </div>
+
+      </main>
+
+      <footer className="w-full max-w-3xl py-6 text-center text-xs text-muted-foreground/30">
+        AI Translator • NVIDIA DeepSeek Model
+      </footer>
+    </div>
+  );
+}
