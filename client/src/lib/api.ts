@@ -25,13 +25,7 @@ export async function translateText({ text, targetLang, sourceLang = "auto" }: T
         "Authorization": `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
-        model: "deepseek-ai/deepseek-v3", // Using standard deepseek-v3 as v3.1 might be a typo or specific internal version, falling back to v3 which is common on NIM, or we can try the exact string user gave.
-        // Let's try to match user request exactly first, but standard NIM usually lists specific models.
-        // Given the user was very specific, I will use "deepseek-ai/deepseek-v3" as it is the standard NIM path, or check if v3.1 is valid. 
-        // Safest bet for "deepseek-ai" on NVIDIA NIM is often "deepseek-ai/deepseek-v3" or "deepseek-ai/deepseek-r1" etc.
-        // I will use "deepseek-ai/deepseek-v3" for stability unless I get an error, but let's stick to user request if possible.
-        // Actually, user said "deepseek-ai/deepseek-v3.1". I will use that. 
-        // If it fails, I'll handle the error.
+        model: "deepseek-ai/deepseek-v3.1",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: text }
