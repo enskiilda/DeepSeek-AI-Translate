@@ -1,0 +1,55 @@
+14:29:04.094 Running build in Washington, D.C., USA (East) – iad1
+14:29:04.095 Build machine configuration: 2 cores, 8 GB
+14:29:04.236 Cloning github.com/enskiilda/DeepSeek-AI-Translate (Branch: main, Commit: a412841)
+14:29:04.451 Cloning completed: 215.000ms
+14:29:04.818 Restored build cache from previous deployment (8667wvTCGKStCEd85piAyqibySTg)
+14:29:05.518 Running "vercel build"
+14:29:05.955 Vercel CLI 49.0.0
+14:29:06.561 Installing dependencies...
+14:29:08.063 
+14:29:08.064 up to date in 1s
+14:29:08.064 
+14:29:08.065 42 packages are looking for funding
+14:29:08.065   run `npm fund` for details
+14:29:08.099 Running "npm run build"
+14:29:08.214 
+14:29:08.215 > rest-express@1.0.0 build
+14:29:08.215 > tsx script/build.ts
+14:29:08.215 
+14:29:09.352 building client...
+14:29:09.692 [36mvite v7.1.12 [32mbuilding for production...[36m[39m
+14:29:10.033 transforming...
+14:29:13.693 [32m✓[39m 2221 modules transformed.
+14:29:14.074 rendering chunks...
+14:29:14.081 [meta-images] no Replit deployment domain found, skipping meta tag updates
+14:29:14.088 computing gzip size...
+14:29:14.128 [2m../dist/public/[22m[32mindex.html                 [39m[1m[2m  2.03 kB[22m[1m[22m[2m │ gzip:   0.85 kB[22m
+14:29:14.129 [2m../dist/public/[22m[2massets/[22m[35mindex-DbS4KHXW.css  [39m[1m[2m 90.24 kB[22m[1m[22m[2m │ gzip:  14.91 kB[22m
+14:29:14.129 [2m../dist/public/[22m[2massets/[22m[36mindex-CBWuM33F.js   [39m[1m[33m503.06 kB[39m[22m[2m │ gzip: 162.79 kB[22m
+14:29:14.130 [33m
+14:29:14.130 (!) Some chunks are larger than 500 kB after minification. Consider:
+14:29:14.130 - Using dynamic import() to code-split the application
+14:29:14.130 - Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+14:29:14.130 - Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+14:29:14.131 [32m✓ built in 4.14s[39m
+14:29:14.131 building server...
+14:29:14.136 ▲ [WARNING] "import.meta" is not available with the "cjs" output format and will be empty [empty-import-meta]
+14:29:14.136 
+14:29:14.136     server/index.ts:10:32:
+14:29:14.137       10 │ ...publicPath = path.resolve(import.meta.dirname, "..", "client", ...
+14:29:14.137          ╵                              ~~~~~~~~~~~
+14:29:14.137 
+14:29:14.137   You need to set the output format to "esm" for "import.meta" to work correctly.
+14:29:14.138 
+14:29:14.322 1 warning
+14:29:14.323 
+14:29:14.323   dist/index.cjs  1.0mb ⚠️
+14:29:14.323 
+14:29:14.323 ⚡ Done in 190ms
+14:29:14.507 Build Completed in /vercel/output [8s]
+14:29:14.615 Deploying outputs...
+14:29:17.022 Deployment completed
+14:29:17.654 Creating build cache...
+14:29:32.428 Created build cache: 14.769s
+14:29:32.429 Uploading build cache [56.42 MB]
+14:29:33.492 Build cache uploaded: 1.068s

@@ -2,23 +2,9 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
-import path from "path";
 
 const app = express();
 const httpServer = createServer(app);
-
-const publicPath = path.resolve(import.meta.dirname, "..", "client", "public");
-app.use(express.static(publicPath, {
-  setHeaders: (res, filePath) => {
-    if (filePath.endsWith('.png')) {
-      res.setHeader('Content-Type', 'image/png');
-    } else if (filePath.endsWith('.ico')) {
-      res.setHeader('Content-Type', 'image/x-icon');
-    } else if (filePath.endsWith('.webmanifest') || filePath.endsWith('.json')) {
-      res.setHeader('Content-Type', 'application/json');
-    }
-  }
-}));
 
 declare module "http" {
   interface IncomingMessage {
