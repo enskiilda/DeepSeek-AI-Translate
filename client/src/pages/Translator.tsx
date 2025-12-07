@@ -150,7 +150,7 @@ export default function Translator() {
 
         <div className="flex flex-col md:flex-row md:gap-0 overflow-hidden">
           
-          <div className="flex-1 min-w-0 relative p-4 md:pr-8 overflow-hidden">
+          <div className="flex-1 min-w-0 max-w-full md:max-w-[50%] relative p-4 md:pr-8 overflow-hidden">
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
@@ -179,7 +179,7 @@ export default function Translator() {
           <div className="hidden md:block w-px bg-border/50 self-stretch mx-4" />
           <div className="md:hidden h-px bg-border/50 mx-4" />
 
-          <div className="flex-1 min-w-0 relative p-4 md:pl-8 overflow-hidden">
+          <div className="flex-1 min-w-0 max-w-full md:max-w-[50%] relative p-4 md:pl-8 overflow-hidden">
             {outputText && (
               <motion.button
                 initial={{ opacity: 0 }}
