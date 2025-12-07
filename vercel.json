@@ -1,39 +1,5 @@
 {
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist/public",
-  "headers": [
-    {
-      "source": "/(.*)\\.png",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "image/png"
-        }
-      ]
-    },
-    {
-      "source": "/manifest.json",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "application/json"
-        }
-      ]
-    },
-    {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        }
-      ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!api|assets|favicon|icon-|apple-touch|manifest|sw).*)",
-      "destination": "/index.html"
-    }
-  ]
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "framework": "nextjs"
 }
