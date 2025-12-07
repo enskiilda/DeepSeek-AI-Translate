@@ -185,7 +185,7 @@ export default function Translator() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 onClick={handleCopy}
-                className={`absolute right-4 top-4 p-2 transition-colors z-10 ${copied ? 'text-green-500' : 'text-muted-foreground/30 hover:text-primary'}`}
+                className={`absolute right-4 top-4 p-2 transition-colors z-10 ${copied ? 'text-[#cccccc]' : 'text-muted-foreground/30 hover:text-primary'}`}
               >
                 {copied ? <CheckIcon /> : <CopyIcon />}
               </motion.button>
