@@ -216,7 +216,7 @@ export default function Translator() {
 
       </main>
 
-      <footer className="w-full max-w-3xl py-6 text-center text-xs text-muted-foreground/30">
+      <footer className="w-full max-w-3xl py-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] text-center text-xs text-muted-foreground/30">
         AI Translator • NVIDIA DeepSeek Model
       </footer>
     </div>
